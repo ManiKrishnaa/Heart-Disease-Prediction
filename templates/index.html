@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Health Form</title>
+    <style>
+       body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; 
+        }
+
+        .container {
+            width: 80%;
+            max-width: 600px;
+        } 
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            margin: 20px 0; 
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: calc(100% - 16px); 
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        h2 {
+            margin-top: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <form id="heartForm" method="post">
+        <h1> Heart - Disease - Prediction</h1>
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required>
+
+        <label for="sex">Sex:</label>
+        <select id="sex" name="sex" required>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="others">Others</option>
+        </select>
+
+        <label for="cp">Chest Pain Type:</label>
+        <select id="cp" name="cp" required>
+            <option value="typical_angina">Typical Angina</option>
+            <option value="atypical_angina">Atypical Angina</option>
+            <option value="non_anginal_pain">Non-Anginal Pain</option>
+            <option value="asymptomatic">Asymptomatic</option>
+        </select>
+
+        <label for="restBloodPressure">Rest Blood Pressure:</label>
+        <input type="number" id="restBloodPressure" name="restBloodPressure" required>
+
+        <label for="cholesterol">Cholesterol:</label>
+        <input type="number" id="cholesterol" name="cholesterol" required>
+
+        <label for="fastingBloodSugar">Fasting Blood Sugar:</label>
+        <input type="number" id="fastingBloodSugar" name="fastingBloodSugar" required>
+
+        <label for="ecgResults">Resting Electrocardiographic Results:</label>
+        <select id="ecgResults" name="ecgResults" required>
+            <option value="normal">Normal</option>
+            <option value="st_t_abnormality">ST-T Wave Abnormality</option>
+            <option value="lvh">Left Ventricular Hypertrophy</option>
+        </select>
+
+        <label for="maxHeartRate">Maximum Heart Rate Achieved:</label>
+        <input type="number" id="maxHeartRate" name="maxHeartRate" required>
+
+        <label for="exerciseAngina">Exercise-Induced Angina:</label>
+        <select id="exerciseAngina" name="exerciseAngina" required>
+            <option value="present">Present</option>
+            <option value="absent">Absent</option>
+        </select>
+
+        <label for="oldPeak">Old Peak:</label>
+        <input type="number" id="oldPeak" name="oldPeak" required>
+
+        <label for="slope">Slope:</label>
+        <select id="slope" name="slope" required>
+            <option value="unsloping">Upsloping</option>
+            <option value="flat">Flat</option>
+            <option value="downsloping">Downsloping</option>
+        </select>
+
+        <label for="ca">CA ( 0 - 3 ) colored :  </label>
+        <input type="number" id="ca" name="ca" required>
+
+        <label for="thalassemia">Thalassemia Type:</label>
+        <select id="thalassemia" name="thalassemia" required>
+            <option value="normal">Normal</option>
+            <option value="fixed_defect">Fixed Defect</option>
+            <option value="reversible_defect">Reversible Defect</option>
+        </select>
+
+        <button type="button" onclick="predict()">Predict</button>
+        <h3 id="predictionResult"></h3>
+        
+        <script>
+            function predict() {
+            var formData = new FormData(document.getElementById("heartForm"));
+
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("predictionResult").innerText = " Prediction of heart disease: " + data;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+        </script>
+</body>
+</html>
